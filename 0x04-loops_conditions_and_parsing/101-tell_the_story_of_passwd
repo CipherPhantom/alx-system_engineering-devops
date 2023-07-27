@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script displays the content of the file /etc/passwd
 
-filename='passwd'
+filename='/etc/passwd'
 while IFS= read -r line
 do
 	echo -n "The user "
