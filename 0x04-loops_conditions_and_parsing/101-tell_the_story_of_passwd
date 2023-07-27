@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# This script displays the content of the file /etc/passwd
+
+filename='passwd'
+while IFS= read -r line
+do
+	echo -n "The user "
+	echo -n $line | cut -z -d: -f1
+	echo -n " is part of the "
+	echo -n $line | cut -z -d: -f4
+	echo -n " gang, lives in "
+	echo -n $line | cut -z -d: -f6
+	echo -n " and rides "
+	echo -n $line | cut -z -d: -f7
+	echo -n  ". "
+	echo -n $line | cut -z -d: -f3
+	echo -n "'s place is protected by the passcode "
+	echo -n $line | cut -z -d: -f2
+	echo -n ", more info about the user here: "
+	echo -n $line | cut -z -d: -f5
+	echo
+
+done < $filename
