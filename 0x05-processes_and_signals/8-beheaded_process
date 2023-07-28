@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This script kills the process 7-highlander
+
+kill -9 "$(pgrep bash -a | grep 7-highlander | awk '{print $1}')"
