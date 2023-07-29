@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+### BEGIN INIT INFO
+# Provides: manage_my_process
+# Short-Description: manage_my_process service
+# Description: Run manage_my_process
+### END INIT INFO
+
+file=/var/run/my_process.pid
+
+start() {
+	'./manage_my_process' &
+	echo $! > $file
+}
+
+stop() {
+	kill "$(cat $file)"
+	rm -f "$file"
+}
+
+case "$1" in
+	start)
+		start
+		echo manage_my_process started
+		;;
+	stop)
+		stop
+		echo manage_my_process stopped
+		;;
+	restart)
+		stop
+		start
+		echo manage_my_process restarted
+		;;
+	*)
+		echo "Usage: manage_my_process {start|stop|restart}"
+esac

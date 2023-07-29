@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # This script stops 4-to_infinity_and_beyond process
 
-kill "$(pgrep bash -a | grep 4-to_infinity_and_beyond | awk '{print $1}')"
+kill "$(pgrep 4-to_infinity_and_beyond -f)"
