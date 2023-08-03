@@ -3,7 +3,13 @@
 # localhost resolved to 127.0.0.2
 # facebook.com resolved to 8.8.8.8
 
-file=~/hosts.new
-echo -e "127.0.0.2\tlocalhost" > $file
-echp -e "8.8.8.8\tfacebook.com" >> $file
-cp -f $file /etc/hosts
+cp /etc/hosts ~/hosts.new
+facebook=$(grep facebook.com ~/hosts.new)
+if [ -z "$facebook" ]
+then
+	sed -i 's/.*\slocalhost$/127.0.0.2\tlocalhost\n8.8.8.8\t\tfacebook.com/' ~/hosts.new
+else
+	sed -i 's/.*\slocalhost$/127.0.0.2\tlocalhost/' ~/hosts.new
+	sed -i 's/.*\sfacebook.com$/8.8.8.8\t\tfacebook.com/' ~/hosts.new
+fi
+cp -f ~/hosts.new /etc/hosts
