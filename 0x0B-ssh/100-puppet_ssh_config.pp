@@ -2,6 +2,6 @@
 
 file { 'ssh_config':
   ensure  => present,
-  path    => '~/.ssh/school',
+  path    => '/etc/ssh/ssh_config',
   content => "Host *\n  PasswordAuthentication no\n  IdentityFile ~/.ssh/school\n"
 }
