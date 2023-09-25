@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # This script installs nginx web server
 
-apt-get update
+apt-get update -y
 apt-get install nginx -y
 echo "Hello World!" > index.html
 mv index.html /var/www/html
