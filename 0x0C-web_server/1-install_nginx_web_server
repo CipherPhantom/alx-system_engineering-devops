@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script installs nginx web server
 
-apt-get update -y
-apt-get nginx -y
+sudo apt-get update -y
+sudo apt-get nginx -y
 echo "Hello World!" > index.html
-mv index.html /var/www/html
+sudo mv index.html /var/www/html
