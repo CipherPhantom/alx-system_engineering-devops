@@ -1,6 +1,20 @@
 #This script installs nginx and configures the server
 
-exec { 'Server Config':
-  provider => shell,
-  command => 'sudo apt-get -y update; sudo apt-get -y install nginx; echo "Hello World!" > /var/www/html/index.html; sudo sed -i -r "s/^}$/\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/www.youtube.com\/watch\?v=QH2-TGUlwu4;\n\t}\n}/" /etc/nginx/sites-available/default; sudo service nginx restart',
+package { 'nginx':
+  ensure => 'installed',
+}
+
+file { '/var/www/html/index.html':
+  ensure  => 'present',
+  content => 'Hello World!',
+}
+
+file { '/etc/nginx/sites-available/default':
+  ensure  => 'present',
+  content => "server {\n\tlisten 80 default_server;\n\tlisten [::]:80 default_server;\n\n\troot /var/www/html;\n\n\tserver_name _;\n\n\tindex index.html index.htm index.nginx-debian.html;\n\n\tlocation / {\n\t\ttry_files \$uri \$uri/ =404;\n\t}\n\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n}",
+}
+
+service { 'nginx':
+  ensure => 'running',
+  enable => true,
 }
