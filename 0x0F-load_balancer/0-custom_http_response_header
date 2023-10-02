@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
-# Configure Nginx so that its HTTP response contains a custom header
+# Configure new Nginx server so that its HTTP response contains a custom header
 
-sed -i "/^\tlisten/a \ \tadd_header X-Served-By \$hostname;" /etc/nginx/sites-available/default
+apt-get -y update
+apt-get -y install nginx
+
+html="/var/www/html/index.html"
+echo "Hello World!" > "$html"
+
+config="/etc/nginx/sites-available/default"
+text="\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/www.youtube.com\/watch\?v=QH2-TGUlwu4;\n\t}\n}"
+
+sed -i -r "s/^}$/$text/" "$config"
+
+error_html="/var/www/html/404.html"
+echo "Ceci n'est pas une page" > "$error_html"
+
+error_text="\n\terror_page 404 \/404.html;\n\tlocation \/404.html {\n\t\tinternal;\n\t}\n}"
+
+sed -i -r "s/^}$/$error_text/" "$config"
+
+sed -i "/^\troot/i \ \tadd_header X-Served-By \$hostname;" "$config"
 service nginx restart
