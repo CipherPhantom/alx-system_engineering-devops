@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# This script Installs and configures HAproxy
+
+apt-get -y  update
+apt-get -y  install haproxy
+
+config_file="/etc/haproxy/haproxy.cfg"
+cp -a "$config_file"{,.orig}
+printf "
+frontend haproxy-main
+	bind *:80
+	default_backend webservers
+
+backend webservers
+	balance roundrobin
+	server 248134-web-01 100.26.18.88:80 check
+	server 248134-web-02 54.197.46.69:80 check
+" >> "$config_file"
+echo "ENABLED=1" >> /etc/default/haproxy
+service haproxy restart
