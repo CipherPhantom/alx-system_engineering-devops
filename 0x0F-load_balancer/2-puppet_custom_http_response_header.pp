@@ -17,7 +17,7 @@ service { 'nginx':
 file_line { 'http header':
   ensure   => present,
   path     => '/etc/nginx/sites-available/default',
-  line     => '\tlocation / {\n\t\tadd_header X-Served-By ${hostname};',
+  line     => "\tlocation / {\n\t\tadd_header X-Served-By ${hostname};",
   match    => '^\tlocation / {',
   multiple => false,
   require  => Package['nginx'],
