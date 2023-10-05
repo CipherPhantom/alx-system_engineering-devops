@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Displays info on subdomains
+
+subdomains=("www" "lb-01" "web-01" "web-02")
+
+display_info() {
+	INFO=$(dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tail -1)
+	RECORD_TYPE=$(echo "$INFO" | awk '{print $4}')
+	DESTINATION=$(echo "$INFO" | awk '{print $5}')
+	echo "The subdomain $2 is a $RECORD_TYPE record and points to $DESTINATION"
+}
+
+
+if [ "$#" -eq 1 ]
+then
+	for sub in "${subdomains[@]}"
+	do
+		display_info "$1" "$sub"
+	done
+elif [ "$#" -eq 2 ]
+then
+	display_info "$1" "$2"
+fi
