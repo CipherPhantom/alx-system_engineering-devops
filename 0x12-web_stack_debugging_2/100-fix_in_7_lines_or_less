@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# This script fix this container so that Nginx is running as the nginx user.
+
+pkill ngin[x]
+sudo -u "nginx" service nginx start
