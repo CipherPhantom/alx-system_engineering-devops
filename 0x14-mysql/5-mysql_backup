@@ -4,5 +4,5 @@
 sql_file="backup.sql"
 archive="$(date +'%d-%m-%Y').tar.gz"
 
-mysqldump -u root -p "$1" --all-databases > "$sql_file"
+mysqldump -u root -p"$1" --all-databases > "$sql_file"
 tar -cvzf "$archive" "$sql_file"
