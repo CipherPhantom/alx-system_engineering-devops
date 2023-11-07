@@ -6,7 +6,7 @@ import requests
 def count_words(subreddit, wordlist, after=None, counter={}):
     """Queries the Reddit API, parses the title of all hot articles,
     and prints a sorted count of given keywords"""
-    url = "https://www.reddit.com/r/{}/hot.json?".format(subreddit)
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {"User-Agent": "MyBot/1.0 (by Cipher10X)"}
     params = {"limit": 100}
 
@@ -35,6 +35,10 @@ def count_words(subreddit, wordlist, after=None, counter={}):
         after = data['data']['after']
         if after:
             return count_words(subreddit, wordlist, after, counter)
-    counter = sorted(counter.items(), key=lambda item: (-item[1], item[0]))
-    for word, count in counter:
-        print("{}: {}".format(word, count))
+        if len(counter) == 0:
+            return
+        counter = sorted(counter.items(), key=lambda item: (-item[1], item[0]))
+        for word, count in counter:
+            print("{}: {}".format(word, count))
+    else:
+        return
