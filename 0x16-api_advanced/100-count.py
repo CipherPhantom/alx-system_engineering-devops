@@ -3,7 +3,7 @@
 import requests
 
 
-def count_words(subreddit, wordlist, after=None, counter={}):
+def count_words(subreddit, word_list, after=None, counter={}):
     """Queries the Reddit API, parses the title of all hot articles,
     and prints a sorted count of given keywords"""
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
@@ -23,7 +23,7 @@ def count_words(subreddit, wordlist, after=None, counter={}):
         posts = data['data']['children']
         for post in posts:
             title = post['data']['title'].lower().split()
-            for word in wordlist:
+            for word in word_list:
                 word = word.lower()
                 if word in title:
                     count = title.count(word)
@@ -34,7 +34,7 @@ def count_words(subreddit, wordlist, after=None, counter={}):
 
         after = data['data']['after']
         if after:
-            return count_words(subreddit, wordlist, after, counter)
+            return count_words(subreddit, word_list, after, counter)
         if len(counter) == 0:
             return
         counter = sorted(counter.items(), key=lambda item: (-item[1], item[0]))
