@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This script configures Nginx to serve your page from the route /airbnb-onepage/
+
+file="/etc/nginx/sites-available/default"
+
+home="location \/ {\n\t\tproxy_pass http:\/\/127.0.0.1:5003\/2-hbnb;"
+sed -ir "s/location \/ {/$home/" "$file"
+
+static="\tlocation \/static\/ {\n\t\talias \/home\/ubuntu\/AirBnB_clone_v4\/web_dynamic\/static\/;\n\t}\n\n}"
+sed -ir "s/^}$/$static/" "$file"
+
+service nginx restart
