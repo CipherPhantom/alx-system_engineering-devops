@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script configures Nginx to serve your page from the route /airbnb-onepage/
+
+file="/etc/nginx/sites-available/default"
+text="\tlocation ~ \/airbnb-dynamic\/number_odd_or_even\/(\\\d+) {\n\t\tset \$subpath \$1;\n\t\tproxy_pass http:\/\/127.0.0.1:5001\/number_odd_or_even\/\$subpath;\n\t}\n\n}"
+sed -ir "s/^}$/$text/" "$file"
+service nginx restart
